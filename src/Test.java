@@ -1,22 +1,24 @@
 import java.awt.image.WritableRaster;
 
 public class Test {
-    public int compareRightAndleftSidesOfPuzzle(WritableRaster raster1, WritableRaster raster2) {
+    public int compareRightAndleftSidesOfPuzzle(WritableRaster rightSide, WritableRaster leftSide) {
         int diff = 0;
-        for (int i = 0; i < raster1.getHeight(); i++) {
-            int[] pixelR = raster1.getPixel(raster1.getWidth() - 1, i, new int[4]);//right
-            int[] pixelL = raster2.getPixel(0, i, new int[4]);//left
+        for (int i = 0; i < rightSide.getHeight(); i++) {
+
+            int[] pixelR = rightSide.getPixel(rightSide.getWidth() - 1, i, new int[4]);
+            int[] pixelL = leftSide.getPixel(0, i, new int[4]);
 
             diff += calcDifferenceBetweenThePixels(pixelR, pixelL);
         }
         return diff;
+
     }
 
-    public int compareDownAndTopSidesOfPuzzle(WritableRaster raster1, WritableRaster raster2) {
+    public int compareDownAndTopSidesOfPuzzle(WritableRaster bottom, WritableRaster top) {
         int diff = 0;
-        for (int i = 0; i < raster1.getWidth(); i++) {
-            int[] pixelD = raster1.getPixel(i, raster1.getHeight() - 1, new int[4]);//down
-            int[] pixelT = raster2.getPixel(i, 0, new int[4]);//top
+        for (int i = 0; i < bottom.getWidth(); i++) {
+            int[] pixelD = bottom.getPixel(i, bottom.getHeight() - 1, new int[4]);
+            int[] pixelT = top.getPixel(i, 0, new int[4]);
 
             diff += calcDifferenceBetweenThePixels(pixelD, pixelT);
         }
