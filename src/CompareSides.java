@@ -1,6 +1,6 @@
 import java.awt.image.WritableRaster;
 
-public class Test {
+public class CompareSides {
     public int compareRightAndleftSidesOfPuzzle(WritableRaster rightSide, WritableRaster leftSide) {
         int diff = 0;
         for (int i = 0; i < rightSide.getHeight(); i++) {
@@ -14,7 +14,7 @@ public class Test {
 
     }
 
-    public int compareDownAndTopSidesOfPuzzle(WritableRaster bottom, WritableRaster top) {
+    public int compareBottomAndTopSidesOfPuzzle(WritableRaster bottom, WritableRaster top) {
         int diff = 0;
         for (int i = 0; i < bottom.getWidth(); i++) {
             int[] pixelD = bottom.getPixel(i, bottom.getHeight() - 1, new int[4]);
