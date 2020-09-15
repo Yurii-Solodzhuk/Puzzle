@@ -223,7 +223,7 @@ public class Game extends JFrame {
 
             List<Image> images = getImagesFromRaster(completedPuzzle);
 
-            createPartsOfPuzzle(images);
+            addButtonToPanel(images);
 
             updateButtons();
             checkSolution();
@@ -250,16 +250,14 @@ public class Game extends JFrame {
         }
 
         private List<Image> getImagesFromRaster(List<WritableRaster> completedPuzzle) {
-            int i = 0;
             List<Image> images = new ArrayList<>();
             for (WritableRaster puzzle : completedPuzzle) {
-                images.add(saveImage(puzzle, String.format("Image %s", i)));
-                i++;
+                images.add(fromRasterToImage(puzzle));
             }
             return images;
         }
 
-        private void createPartsOfPuzzle(List<Image> images) {
+        private void addButtonToPanel(List<Image> images) {
             int x = 0;
             buttons.removeAll(buttons);
             for (int i = 0; i < 4; i++) {
@@ -283,7 +281,6 @@ public class Game extends JFrame {
 
         private WritableRaster getFirstImage(List<WritableRaster> rastersFromImages) {
             WritableRaster first = null;
-
             for (WritableRaster puzzle : rastersFromImages) {
                 if (isFirst(puzzle, rastersFromImages)) {
                     first = puzzle;
@@ -299,7 +296,6 @@ public class Game extends JFrame {
         }
 
         private WritableRaster getRight(WritableRaster currentImage, List<WritableRaster> imagesToCheck) {
-
             Map<Integer, WritableRaster> comparingResults = new TreeMap<>();
 
             imagesToCheck.forEach(imageToCheck -> {
@@ -315,7 +311,6 @@ public class Game extends JFrame {
         }
 
         private Integer getLeft(WritableRaster currentImage, List<WritableRaster> imagesToCheck) {
-
             Map<Integer, WritableRaster> comparingResults = new TreeMap<>();
 
             imagesToCheck.forEach(imageToCheck -> {
@@ -359,16 +354,9 @@ public class Game extends JFrame {
                     .getKey();
         }
 
-        private Image saveImage(WritableRaster currentImage, String imageName) {
-            Image image = new BufferedImage(ColorModel.getRGBdefault(),
+        private Image fromRasterToImage(WritableRaster currentImage) {
+            return new BufferedImage(ColorModel.getRGBdefault(),
                     currentImage, getColorModel().isAlphaPremultiplied(), null);
-
-            try {
-                ImageIO.write((RenderedImage) image, "jpg", new File("C:\\Users\\Yurii\\Desktop\\" + imageName + ".jpg"));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return image;
         }
 
         private List<WritableRaster> getImagesToCheck(List<WritableRaster> rastersFromImages, WritableRaster currentImage) {
@@ -379,4 +367,3 @@ public class Game extends JFrame {
         }
     }
 }
-
