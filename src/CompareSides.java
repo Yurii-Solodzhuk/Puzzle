@@ -14,11 +14,11 @@ public class CompareSides {
 
     }
 
-    public int compareBottomAndTopSidesOfPuzzle(WritableRaster bottom, WritableRaster top) {
+    public int compareBottomAndTopSidesOfPuzzle(WritableRaster bottomSide, WritableRaster topSide) {
         int diff = 0;
-        for (int i = 0; i < bottom.getWidth(); i++) {
-            int[] pixelD = bottom.getPixel(i, bottom.getHeight() - 1, new int[4]);
-            int[] pixelT = top.getPixel(i, 0, new int[4]);
+        for (int i = 0; i < bottomSide.getWidth(); i++) {
+            int[] pixelD = bottomSide.getPixel(i, bottomSide.getHeight() - 1, new int[4]);
+            int[] pixelT = topSide.getPixel(i, 0, new int[4]);
 
             diff += calcDifferenceBetweenThePixels(pixelD, pixelT);
         }

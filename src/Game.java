@@ -58,7 +58,7 @@ public class Game extends JFrame {
         add(panel, BorderLayout.CENTER);
 
         images = new ArrayList<>();
-        createPartsOfPazzle();
+        createPartsOfPuzzle();
 
         Collections.shuffle(buttons);
         buttons.add(lastButton);
@@ -127,7 +127,7 @@ public class Game extends JFrame {
     }
 
 
-    private void createPartsOfPazzle() {
+    private void createPartsOfPuzzle() {
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 3; j++) {
                 Image image = createImage(new FilteredImageSource(resizedImage.getSource(),
@@ -213,53 +213,53 @@ public class Game extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             List<WritableRaster> rastersFromImages = getRastersFromImages(images);
-            List<WritableRaster> completedPazle = new ArrayList<>();
+            List<WritableRaster> completedPuzzle = new ArrayList<>();
             final WritableRaster currentImage = getFirstImage(rastersFromImages);
             final List<WritableRaster> imagesToCheck = getImagesToCheck(rastersFromImages, currentImage);
 
-            completedPazle.add(currentImage);
+            completedPuzzle.add(currentImage);
 
-            collectingPuzzle(completedPazle, currentImage, imagesToCheck, 0);
+            collectingPuzzle(completedPuzzle, currentImage, imagesToCheck, 0);
 
-            List<Image> images = getImagesFromRaster(completedPazle);
+            List<Image> images = getImagesFromRaster(completedPuzzle);
 
-            createPartsOfPazzle(images);
+            createPartsOfPuzzle(images);
 
             updateButtons();
             checkSolution();
         }
 
-        private void collectingPuzzle(List<WritableRaster> completedPazle,
+        private void collectingPuzzle(List<WritableRaster> completedPuzzle,
                                       WritableRaster currentImage,
                                       List<WritableRaster> imagesToCheck,
                                       int topPosition) {
             if (imagesToCheck.size() > 0) {
-                if (completedPazle.size() > 0 && completedPazle.size() % 3 == 0) {
-                    WritableRaster bottom = getBottom(completedPazle.get(topPosition), imagesToCheck);
+                if (completedPuzzle.size() > 0 && completedPuzzle.size() % 3 == 0) {
+                    WritableRaster bottom = getBottom(completedPuzzle.get(topPosition), imagesToCheck);
                     imagesToCheck.remove(bottom);
                     topPosition += 3;
-                    completedPazle.add(bottom);
-                    collectingPuzzle(completedPazle, bottom, imagesToCheck, topPosition);
+                    completedPuzzle.add(bottom);
+                    collectingPuzzle(completedPuzzle, bottom, imagesToCheck, topPosition);
                 } else {
                     WritableRaster right = getRight(currentImage, imagesToCheck);
                     imagesToCheck.remove(right);
-                    completedPazle.add(right);
-                    collectingPuzzle(completedPazle, right, imagesToCheck, topPosition);
+                    completedPuzzle.add(right);
+                    collectingPuzzle(completedPuzzle, right, imagesToCheck, topPosition);
                 }
             }
         }
 
-        private List<Image> getImagesFromRaster(List<WritableRaster> completedPazle) {
+        private List<Image> getImagesFromRaster(List<WritableRaster> completedPuzzle) {
             int i = 0;
             List<Image> images = new ArrayList<>();
-            for (WritableRaster pazle : completedPazle) {
-                images.add(saveImage(pazle, String.format("Image %s", i)));
+            for (WritableRaster puzzle : completedPuzzle) {
+                images.add(saveImage(puzzle, String.format("Image %s", i)));
                 i++;
             }
             return images;
         }
 
-        private void createPartsOfPazzle(List<Image> images) {
+        private void createPartsOfPuzzle(List<Image> images) {
             int x = 0;
             buttons.removeAll(buttons);
             for (int i = 0; i < 4; i++) {
@@ -284,18 +284,18 @@ public class Game extends JFrame {
         private WritableRaster getFirstImage(List<WritableRaster> rastersFromImages) {
             WritableRaster first = null;
 
-            for (WritableRaster pazle : rastersFromImages) {
-                if (isFirst(pazle, rastersFromImages)) {
-                    first = pazle;
+            for (WritableRaster puzzle : rastersFromImages) {
+                if (isFirst(puzzle, rastersFromImages)) {
+                    first = puzzle;
                     break;
                 }
             }
             return first;
         }
 
-        private boolean isFirst(WritableRaster pazle, List<WritableRaster> rastersFromImages) {
-            return getLeft(pazle, rastersFromImages) > 5000
-                    && getTop(pazle, rastersFromImages) > 5000;
+        private boolean isFirst(WritableRaster puzzle, List<WritableRaster> rastersFromImages) {
+            return getLeft(puzzle, rastersFromImages) > 5000
+                    && getTop(puzzle, rastersFromImages) > 5000;
         }
 
         private WritableRaster getRight(WritableRaster currentImage, List<WritableRaster> imagesToCheck) {
@@ -364,7 +364,7 @@ public class Game extends JFrame {
                     currentImage, getColorModel().isAlphaPremultiplied(), null);
 
             try {
-                boolean jpg = ImageIO.write((RenderedImage) image, "PNG", new File("C:\\Users\\Yurii\\Desktop\\" + imageName + ".jpg"));
+                ImageIO.write((RenderedImage) image, "jpg", new File("C:\\Users\\Yurii\\Desktop\\" + imageName + ".jpg"));
             } catch (IOException e) {
                 e.printStackTrace();
             }
